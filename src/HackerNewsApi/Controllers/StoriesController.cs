@@ -6,14 +6,9 @@ namespace HackerNewsApi.Controllers;
 
 [ApiController]
 [Route("api/stories")]
-public sealed class StoriesController : ControllerBase
+public sealed class StoriesController(IHackerNewsService hackerNewsService) : ControllerBase
 {
-    private readonly IHackerNewsService _hackerNewsService;
-
-    public StoriesController(IHackerNewsService hackerNewsService)
-    {
-        _hackerNewsService = hackerNewsService;
-    }
+    private readonly IHackerNewsService hackerNewsService = hackerNewsService;
 
     [HttpGet("best")]
     [ProducesResponseType(typeof(IReadOnlyList<Story>), StatusCodes.Status200OK)]
@@ -21,7 +16,7 @@ public sealed class StoriesController : ControllerBase
         [FromQuery] int n,
         CancellationToken cancellationToken)
     {
-        var stories = await _hackerNewsService.GetBestStoriesAsync(n, cancellationToken);
+        var stories = await hackerNewsService.GetBestStoriesAsync(n, cancellationToken);
 
         return Ok(stories);
     }
