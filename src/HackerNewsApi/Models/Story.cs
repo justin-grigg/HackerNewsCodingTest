@@ -1,8 +1,5 @@
 namespace HackerNewsApi.Models;
 
-/// <summary>
-/// Represents a Hacker News story returned by the API.
-/// </summary>
 public sealed class Story
 {
     public required string Title { get; init; }
